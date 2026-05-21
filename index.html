@@ -42,7 +42,6 @@
       font-size: 0.8rem;
       color: #888;
       margin-bottom: 0.4rem;
-      text-transform: uppercase;
       letter-spacing: 0.05em;
     }
     .card-title {
@@ -67,6 +66,7 @@
     .btn:hover { opacity: 0.75; }
     .btn-primary { background: #1a73e8; color: #fff; }
     .btn-secondary { background: #eee; color: #333; }
+    .status { color: #888; font-size: 0.95rem; }
   </style>
 </head>
 <body>
@@ -75,26 +75,77 @@
     <p>業務改善・DX関連ニュースの週次ダイジェスト</p>
   </header>
 
-  <div class="reports">
-
-    <div class="card">
-      <div class="card-date">2026-05-19</div>
-      <div class="card-title">週次ダイジェスト #2</div>
-      <div class="links">
-        <a class="btn btn-primary" href="report/20260519/slides-20260519.html">スライド</a>
-        <a class="btn btn-secondary" href="report/20260519/digest-20260519.md">Markdown</a>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-date">2026-05-18</div>
-      <div class="card-title">週次ダイジェスト #1</div>
-      <div class="links">
-        <a class="btn btn-primary" href="report/slides-20260518.html">スライド</a>
-        <a class="btn btn-secondary" href="report/digest-20260518.md">Markdown</a>
-      </div>
-    </div>
-
+  <div class="reports" id="reports">
+    <p class="status">読み込み中...</p>
   </div>
+
+  <script>
+    async function fetchJSON(url) {
+      const res = await fetch(url, { headers: { Accept: 'application/vnd.github.v3+json' } });
+      if (!res.ok) throw new Error(`GitHub API ${res.status}`);
+      return res.json();
+    }
+
+    function formatDate(s) {
+      return `${s.slice(0,4)}-${s.slice(4,6)}-${s.slice(6,8)}`;
+    }
+
+    async function loadReports() {
+      const container = document.getElementById('reports');
+      try {
+        const hostname = window.location.hostname;          // e.g. "user.github.io"
+        const username = hostname.replace('.github.io', '');
+        const segments = window.location.pathname.split('/').filter(Boolean);
+        const repo = segments[0] || `${username}.github.io`;
+
+        const apiBase = `https://api.github.com/repos/${username}/${repo}/contents/report`;
+        const topItems = await fetchJSON(apiBase);
+
+        // Collect file paths from root and one level of subdirectories
+        const paths = [];
+        await Promise.all(topItems.map(async item => {
+          if (item.type === 'file') {
+            paths.push(item.path);
+          } else if (item.type === 'dir') {
+            const sub = await fetchJSON(item.url);
+            sub.filter(i => i.type === 'file').forEach(i => paths.push(i.path));
+          }
+        }));
+
+        // Group by date extracted from filename (YYYYMMDD)
+        const byDate = {};
+        for (const path of paths) {
+          const m = path.match(/(\d{8})/);
+          if (!m) continue;
+          const date = m[1];
+          if (!byDate[date]) byDate[date] = {};
+          if (path.endsWith('.html')) byDate[date].slides = path;
+          if (path.endsWith('.md'))   byDate[date].digest = path;
+        }
+
+        const dates = Object.keys(byDate).sort().reverse();
+        if (dates.length === 0) {
+          container.innerHTML = '<p class="status">レポートが見つかりません</p>';
+          return;
+        }
+
+        container.innerHTML = dates.map(date => {
+          const { slides, digest } = byDate[date];
+          return `<div class="card">
+            <div class="card-date">${formatDate(date)}</div>
+            <div class="card-title">週次ダイジェスト</div>
+            <div class="links">
+              ${slides ? `<a class="btn btn-primary" href="${slides}">スライド</a>` : ''}
+              ${digest ? `<a class="btn btn-secondary" href="${digest}">Markdown</a>` : ''}
+            </div>
+          </div>`;
+        }).join('');
+      } catch (e) {
+        container.innerHTML = `<p class="status">読み込みエラー: ${e.message}</p>`;
+      }
+    }
+
+    loadReports();
+  </script>
 </body>
 </html>
