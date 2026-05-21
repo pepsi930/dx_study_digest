@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>DX Study Digest 20260518</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+
+:root {
+  --dark:   #111827;
+  --accent: #B91C1C;
+  --navy:   #1B2A4A;
+  --blue:   #2563EB;
+  --gold:   #F59E0B;
+  --text:   #111827;
+  --muted:  #5A6A7E;
+  --border: #E5E7EB;
+  --bg:     #F8FAFC;
+  --white:  #FFFFFF;
+}
+
+.reveal {
+  font-family: 'Segoe UI', 'Yu Gothic UI', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+  background: #D1D5DB;
+}
+.reveal .slides section {
+  text-align: left;
+  padding: 0 !important;
+  height: 100% !important;
+  overflow: hidden;
+  background: var(--white);
+  box-shadow: 0 6px 32px rgba(0,0,0,.22);
+}
+.reveal h1, .reveal h2, .reveal h3 { text-transform: none; margin: 0; }
+.reveal ul, .reveal ol { margin: 0; display: block; }
+.reveal a { color: inherit; }
+
+/* ════════════════════════════════════════
+   INDEX SLIDE
+════════════════════════════════════════ */
+.index-slide { display: flex; flex-direction: column; height: 100%; }
+
+.ih {
+  background: var(--navy);
+  padding: 18px 30px;
+  display: flex; align-items: center; gap: 18px;
+  flex-shrink: 0;
+  border-bottom: 3px solid var(--blue);
+}
+.ih-brand {
+  font-size: 8px; letter-spacing: 3px; color: rgba(255,255,255,.3);
+  writing-mode: vertical-rl; text-transform: uppercase; flex-shrink: 0;
+}
+.ih-center { flex: 1; }
+.ih-center h1 { font-size: 22px; font-weight: 700; color: #fff; letter-spacing: .3px; line-height: 1.2; }
+.ih-sub { margin: 5px 0 0; font-size: 12px; color: rgba(255,255,255,.5); }
+.ih-count {
+  font-size: 46px; font-weight: 200; color: rgba(255,255,255,.2);
+  letter-spacing: -2px; flex-shrink: 0; text-align: center; line-height: 1;
+}
+.ih-count span {
+  font-size: 9px; letter-spacing: 2px; display: block;
+  color: rgba(255,255,255,.3); margin-top: 2px; font-weight: 400;
+}
+
+.ib { flex: 1; padding: 14px 30px 10px; overflow: hidden; }
+
+.ix-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.ix-table thead tr { background: var(--navy); }
+.ix-table th {
+  padding: 6px 10px; color: #fff; font-size: 9px;
+  letter-spacing: 1.2px; text-transform: uppercase; font-weight: 600; text-align: left;
+}
+.ix-table tbody tr:nth-child(odd)  { background: var(--white); }
+.ix-table tbody tr:nth-child(even) { background: var(--bg); }
+.ix-table td { padding: 5px 10px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.ix-n { width: 28px; text-align: center; font-weight: 700; color: var(--navy); font-size: 10px; }
+.ix-t { max-width: 700px; }
+.ix-t a { color: var(--text); text-decoration: none; font-weight: 500; }
+.ix-t a:hover { color: var(--blue); }
+.ix-s { color: var(--muted); font-size: 10px; white-space: nowrap; width: 150px; }
+.ix-r { color: var(--gold); white-space: nowrap; font-size: 12px; letter-spacing: 1px; }
+
+/* 要監視キーワード */
+.ix-monitor {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: rgba(185,28,28,.04);
+  border: 1px solid rgba(185,28,28,.18);
+  border-left: 3px solid var(--accent);
+  border-radius: 2px;
+}
+.ix-monitor-label {
+  font-size: 9px; font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 8px;
+}
+.ix-monitor-items { display: flex; gap: 16px; }
+.ix-monitor-item { display: flex; align-items: center; gap: 7px; flex: 1; }
+.ix-monitor-num {
+  background: var(--accent); color: #fff;
+  font-size: 9px; font-weight: 700;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.ix-monitor-text { font-size: 12px; font-weight: 500; color: var(--text); }
+
+/* ════════════════════════════════════════
+   ARTICLE SLIDE
+════════════════════════════════════════ */
+.art-slide { display: flex; flex-direction: column; height: 100%; }
+
+/* ── 上部ダークバー ── */
+.ah {
+  background: var(--dark);
+  height: 42px;
+  padding: 0 22px;
+  display: flex; align-items: center;
+  flex-shrink: 0;
+}
+.ah-l { display: flex; align-items: center; gap: 14px; flex: 1; overflow: hidden; }
+.ah-badge {
+  background: var(--accent); color: #fff;
+  font-size: 9px; font-weight: 700; letter-spacing: 1.5px;
+  padding: 3px 10px; flex-shrink: 0;
+}
+.ah-src  { font-size: 13px; color: rgba(255,255,255,.6); white-space: nowrap; }
+.ah-dot  { color: rgba(255,255,255,.25); }
+.ah-date { font-size: 12px; color: rgba(255,255,255,.4); white-space: nowrap; }
+.ah-link {
+  font-size: 11.5px; color: rgba(255,255,255,.4); text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,.2); white-space: nowrap;
+}
+.ah-link:hover { color: rgba(255,255,255,.85); }
+.ah-r { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.ah-rlbl { font-size: 10px; letter-spacing: 1.5px; color: rgba(255,255,255,.3); text-transform: uppercase; }
+.ah-stars { color: var(--gold); font-size: 16px; letter-spacing: 1px; }
+
+/* ── タイトルセクション ── */
+.at { padding: 14px 26px 0; flex-shrink: 0; }
+.at-cat {
+  font-size: 11px; letter-spacing: 2.5px; color: var(--accent);
+  text-transform: uppercase; font-weight: 700; margin-bottom: 7px;
+}
+.at-title {
+  font-size: 33px; font-weight: 800; color: var(--dark);
+  line-height: 1.12; margin: 0 0 7px; letter-spacing: -0.5px;
+}
+.at-sub {
+  font-size: 18px; font-weight: 400; color: var(--muted);
+  margin: 0 0 12px; line-height: 1.4;
+}
+.at-rule { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+/* ── 3カラムエリア ── */
+.ac {
+  flex: 1;
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  min-height: 0;
+}
+.ac-col {
+  padding: 11px 17px;
+  border-right: 1px solid var(--border);
+  overflow: hidden;
+  display: flex; flex-direction: column;
+}
+.ac-col:last-child { border-right: none; }
+
+.clbl {
+  font-size: 11px; letter-spacing: 2px; font-weight: 700;
+  color: var(--accent); text-transform: uppercase; margin-bottom: 4px;
+}
+.chead {
+  font-size: 18px; font-weight: 700; color: var(--dark);
+  padding-bottom: 8px; margin-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* 3行サマリ */
+.sum-list { list-style: none; padding: 0; margin: 0; overflow: hidden; }
+.sum-list li {
+  display: flex; align-items: flex-start; gap: 8px;
+  margin-bottom: 14px; font-size: 15px; line-height: 1.7; color: var(--text);
+}
+.cn {
+  color: var(--accent); font-weight: 800; font-size: 18px;
+  flex-shrink: 0; line-height: 1.4;
+}
+.cbody { flex: 1; }
+
+/* 想定議論ポイント */
+.disc-wrap { display: flex; flex-direction: column; gap: 13px; overflow: hidden; }
+.disc-item { display: flex; align-items: flex-start; gap: 9px; }
+.qn {
+  font-size: 12px; font-weight: 700; color: var(--accent);
+  background: rgba(185,28,28,.08);
+  border: 1px solid rgba(185,28,28,.25);
+  padding: 3px 8px; flex-shrink: 0; margin-top: 2px;
+  letter-spacing: .5px;
+}
+.disc-item p { margin: 0; font-size: 15px; line-height: 1.7; color: var(--text); }
+
+/* 論理的次章 */
+.next-list { list-style: none; padding: 0; margin: 0; overflow: hidden; }
+.next-list li {
+  padding-left: 18px; position: relative;
+  margin-bottom: 13px; font-size: 15px; line-height: 1.7; color: var(--muted);
+}
+.next-list li::before {
+  content: '→'; position: absolute; left: 0;
+  color: var(--accent); font-size: 13px; top: 3px;
+}
+
+/* ── 下部ダークバー（自社業務との接点） ── */
+.ab {
+  background: var(--dark);
+  padding: 13px 24px;
+  display: flex; align-items: flex-start; gap: 30px;
+  flex-shrink: 0;
+}
+.ab-l { flex-shrink: 0; min-width: 90px; }
+.ab-tiny {
+  font-size: 9px; letter-spacing: 2px; color: rgba(255,255,255,.3);
+  text-transform: uppercase; margin-bottom: 5px;
+}
+.ab-head { font-size: 19px; font-weight: 700; color: #fff; line-height: 1.25; }
+.ab-text {
+  flex: 1; font-size: 14px; line-height: 1.7;
+  color: rgba(255,255,255,.72); padding-top: 1px;
+}
+.ab-text strong { color: rgba(255,255,255,.96); }
+
+/* ── ナビゲーション ── */
+.reveal .controls { bottom: 10px !important; }
+.reveal .progress  { height: 3px !important; color: var(--accent) !important; }
+.reveal .slide-number {
+  font-size: 11px !important; background: rgba(17,24,39,.75) !important;
+  color: rgba(255,255,255,.65) !important; padding: 3px 8px !important;
+  border-radius: 2px !important;
+}
+</style>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <section class="index-slide">
+      <div class="ih">
+        <div class="ih-brand">DX STUDY DIGEST</div>
+        <div class="ih-center">
+          <h1>業務改善・DXニュース 週次ダイジェスト</h1>
+          <p class="ih-sub">生成日：2026年05月18日&nbsp;&nbsp;／&nbsp;&nbsp;対象期間：2026/05/11〜2026/05/18</p>
+        </div>
+        <div class="ih-count">15<span>articles</span></div>
+      </div>
+      <div class="ib">
+        <table class="ix-table">
+          <thead>
+            <tr><th>#</th><th>記事タイトル</th><th>媒体</th><th>評価</th></tr>
+          </thead>
+          <tbody>
+        <tr>
+          <td class="ix-n">1</td>
+          <td class="ix-t"><a href="https://www.itmedia.co.jp/enterprise/articles/2605/15/news029.html" target="_blank">SAPが「自律型エンタープライズ戦略」を始動　AIエージェントが業務を自動実行する時代へ</a></td>
+          <td class="ix-s">ITmedia エンタープライズ</td>
+          <td class="ix-r">★★★★★</td>
+        </tr>
+        <tr>
+          <td class="ix-n">2</td>
+          <td class="ix-t"><a href="https://www.itmedia.co.jp/enterprise/articles/2605/15/news017.html" target="_blank">デンソー、SCMの内製主義から脱却へ　「AIエージェント」で挑むサプライチェーン強靱化</a></td>
+          <td class="ix-s">ITmedia エンタープライズ</td>
+          <td class="ix-r">★★★★★</td>
+        </tr>
+        <tr>
+          <td class="ix-n">3</td>
+          <td class="ix-t"><a href="https://www.itmedia.co.jp/enterprise/articles/2605/18/news006.html" target="_blank">ServiceNowを「AIエージェントのOS」に　NVIDIAファンCEOが認める進化の現在地</a></td>
+          <td class="ix-s">ITmedia エンタープライズ</td>
+          <td class="ix-r">★★★★★</td>
+        </tr>
+        <tr>
+          <td class="ix-n">4</td>
+          <td class="ix-t"><a href="https://xtech.nikkei.com/atcl/nxt/column/18/03585/051400005/" target="_blank">積水化学工業が現在進行中のDXを解説、基幹系の刷新後に進める次の挑戦</a></td>
+          <td class="ix-s">日経XTECH IT</td>
+          <td class="ix-r">★★★★</td>
+        </tr>
+        <tr>
+          <td class="ix-n">5</td>
+          <td class="ix-t"><a href="https://xtech.nikkei.com/atcl/nxt/column/18/03609/051400005/" target="_blank">SBI新生銀が挑む次世代勘定系への刷新、難所は脱・インド製パッケージ</a></td>
+          <td class="ix-s">日経XTECH IT</td>
+          <td class="ix-r">★★★★</td>
+        </tr>
+        <tr>
+          <td class="ix-n">6</td>
+          <td class="ix-t"><a href="https://www.itmedia.co.jp/enterprise/articles/2605/15/news046.html" target="_blank">Anthropic、中小企業用AI業務支援「Claude for Small Business」発表　15種のAIエージェントが作業を肩代わり</a></td>
+          <td class="ix-s">ITmedia エンタープライズ</td>
+          <td class="ix-r">★★★★</td>
+        </tr>
+        <tr>
+          <td class="ix-n">7</td>
+          <td class="ix-t"><a href="https://www.itmedia.co.jp/business/articles/2605/16/news002.html" target="_blank">AIを導入しても、なぜ格差は広がるのか　7割の企業が感じる「使える人」との差</a></td>
+          <td class="ix-s">ITmedia ビジネス</td>
+          <td class="ix-r">★★★★</td>
+        </tr>
+        <tr>
+          <td class="ix-n">8</td>
+          <td class="ix-t"><a href="https://xtech.nikkei.com/atcl/nxt/column/18/00001/11746/" target="_blank">「客先常駐」も、OpenAIがAI導入の新会社　問われるIT部門やSIerの存在意義</a></td>
+          <td class="ix-s">日経XTECH IT</td>
+          <td class="ix-r">★★★★</td>
+        </tr>
+        <tr>
+          <td class="ix-n">9</td>
+          <td class="ix-t"><a href="https://www.itmedia.co.jp/enterprise/articles/2605/14/news030.html" target="_blank">トヨタファイナンスがAIエージェントを問い合わせ対応業務に導入　「非定型業務」を自動化</a></td>
+          <td class="ix-s">ITmedia エンタープライズ</td>
+          <td class="ix-r">★★★★</td>
+        </tr>
+        <tr>
+          <td class="ix-n">10</td>
+          <td class="ix-t"><a href="https://www.itmedia.co.jp/enterprise/articles/2605/15/news050.html" target="_blank">アクセンチュアとGoogleが新プログラム　AI全社展開で「つまづく」企業を支援へ</a></td>
+          <td class="ix-s">ITmedia エンタープライズ</td>
+          <td class="ix-r">★★★★</td>
+        </tr>
+        <tr>
+          <td class="ix-n">11</td>
+          <td class="ix-t"><a href="https://www.itmedia.co.jp/business/articles/2605/18/news036.html" target="_blank">伊藤忠商事や三菱ケミカルなど16社が参画　大手企業の「暗黙知」を活用する新プロジェクト</a></td>
+          <td class="ix-s">ITmedia ビジネス</td>
+          <td class="ix-r">★★★</td>
+        </tr>
+        <tr>
+          <td class="ix-n">12</td>
+          <td class="ix-t"><a href="https://www.itmedia.co.jp/enterprise/articles/2605/15/news007.html" target="_blank">「遅れることは許されない」　NVIDIAファンCEOが断言する、AIエージェントによるビジネス構造の激変</a></td>
+          <td class="ix-s">ITmedia エンタープライズ</td>
+          <td class="ix-r">★★★</td>
+        </tr>
+        <tr>
+          <td class="ix-n">13</td>
+          <td class="ix-t"><a href="https://monoist.itmedia.co.jp/mn/articles/2605/15/news019.html" target="_blank">AIエージェントが2D図面を読図して3D化、renueが図面SaaSを機能強化</a></td>
+          <td class="ix-s">ITmedia AI+</td>
+          <td class="ix-r">★★★</td>
+        </tr>
+        <tr>
+          <td class="ix-n">14</td>
+          <td class="ix-t"><a href="https://www.itmedia.co.jp/aiplus/articles/2605/15/news013.html" target="_blank">「ポンコツ」と呼ばれたM365 Copilotの逆転劇、GPT-5が転換点　活用の秘訣は&quot;脱・プロンプト職人&quot;</a></td>
+          <td class="ix-s">ITmedia AI+</td>
+          <td class="ix-r">★★★</td>
+        </tr>
+        <tr>
+          <td class="ix-n">15</td>
+          <td class="ix-t"><a href="https://www.itmedia.co.jp/enterprise/articles/2605/18/news062.html" target="_blank">NEC社長が説く　AI時代と新たな安全保障環境の到来で「ITサービスはこう変わる」</a></td>
+          <td class="ix-s">ITmedia エンタープライズ</td>
+          <td class="ix-r">★★★</td>
+        </tr></tbody>
+        </table>
+        
+        <div class="ix-monitor">
+          <div class="ix-monitor-label">今回拾わなかったが要監視のキーワード</div>
+          <div class="ix-monitor-items">
+            
+            <div class="ix-monitor-item">
+              <span class="ix-monitor-num">1</span>
+              <span class="ix-monitor-text">**AI Control Tower / マルチエージェント管理基盤**（ServiceNow・SAP・Microsoft等が競う「AIエージェントの管理層」の標準化争い。今週は各社が発表したが比較・統合の視点が出ていない）</span>
+            </div>
+            <div class="ix-monitor-item">
+              <span class="ix-monitor-num">2</span>
+              <span class="ix-monitor-text">**SAPとAIエージェントの組み合わせによる2027年問題解決策**（SAP自律型エンタープライズ発表により「ECC→S/4HANA移行+Autonomous Suite同時導入」という具体的解法が登場したが、実際の移行コスト・スケジュールへの影響が未報道）</span>
+            </div>
+            <div class="ix-monitor-item">
+              <span class="ix-monitor-num">3</span>
+              <span class="ix-monitor-text">**AIが生成した業務成果物の品質保証・責任所在**（今週は図面3D化・問い合わせ対応・業務代行など「AIが成果物を生成する」記事が複数あったが、品質問題・責任論点の議論が未登場）</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="art-slide">
+
+      <div class="ah">
+        <div class="ah-l">
+          <span class="ah-badge">BRIEF&nbsp;·&nbsp;1</span>
+          <span class="ah-src">ITmedia エンタープライズ</span>
+          <span class="ah-dot">·</span>
+          <span class="ah-date">2026 / 05 / 15</span>
+          <a href="https://www.itmedia.co.jp/enterprise/articles/2605/15/news029.html" class="ah-link" target="_blank">記事を開く ↗</a>
+        </div>
+        <div class="ah-r">
+          <span class="ah-rlbl">重要度</span>
+          <span class="ah-stars">★★★★★</span>
+        </div>
+      </div>
+
+      <div class="at">
+        <div class="at-cat">ITMEDIA エンタープライズ&nbsp;·&nbsp;ANALYSIS</div>
+        <h2 class="at-title">SAPが「自律型エンタープライズ戦略」を始動</h2>
+        <p class="at-sub">AIエージェントが業務を自動実行する時代へ</p>
+        <div class="at-rule"></div>
+      </div>
+
+      <div class="ac">
+        <div class="ac-col">
+          <div class="clbl">LEDE&nbsp;·&nbsp;要約</div>
+          <div class="chead">3行サマリ</div>
+          <ul class="sum-list"><li><span class="cn">①</span><span class="cbody">SAPがSAP Sapphire 2026で「Business AI Platform」と「SAP Autonomous Suite」を発表。50以上のJoule Assistant、200以上のAIエンジニアリング機能、月次決算自動化（Autonomous Close Assistant）を含む自律型業務実行基盤を提供開始</span></li><li><span class="cn">②</span><span class="cbody">SAP S/4HANAユーザーが段階的にAI自律化へ移行できる体制が整い、「ERP＝AIエージェントの実行基盤」というアーキテクチャへの転換が公式に宣言された</span></li><li><span class="cn">③</span><span class="cbody">ERP導入で「35%のコスト削減が可能」とSAPが主張。RISE with SAPユーザーには3年間アシスタント機能を提供、旧ECCユーザーにもAI機能を段階的に開放（SAP Sapphire 2026発表より）</span></li></ul>
+        </div>
+        <div class="ac-col">
+          <div class="clbl">DEBATE&nbsp;·&nbsp;議論</div>
+          <div class="chead">想定議論ポイント</div>
+          <div class="disc-wrap">
+    <div class="disc-item">
+      <span class="qn">Q1</span>
+      <p>「SAP S/4HANAへの移行」と「SAP Autonomous Suite導入」が同時に要求される場合、2027年問題対応中の企業はどちらを優先すべきか、判断軸は何か？</p>
+    </div>
+    <div class="disc-item">
+      <span class="qn">Q2</span>
+      <p>月次決算の自動化（Autonomous Close Assistant）が普及した場合、経理・財務部門の人員配置とスキル要件はどう再設計されるべきか？</p>
+    </div>
+    <div class="disc-item">
+      <span class="qn">Q3</span>
+      <p>SAPのAIエージェント基盤とAnthropicのClaude for Small Business・OpenAI Deployment Companyが競合する場面では、企業はどの基準で使い分けるか？</p>
+    </div></div>
+        </div>
+        <div class="ac-col">
+          <div class="clbl">OUTLOOK&nbsp;·&nbsp;次章</div>
+          <div class="chead">論理的次章</div>
+          <ul class="next-list"><li>RISE with SAPユーザーの「Autonomous Suite実際に使ってみた」レポートが出てくる。</li><li>2027年問題対応中の旧ECCユーザーに「移行とAI化を同時進行する」プランを各SIerが提案し始める。</li><li>Autonomous Close Assistantの月次決算自動化で「何件のエラー・例外が発生したか」最初の事例報告が登場する。</li></ul>
+        </div>
+      </div>
+
+      <div class="ab">
+        <div class="ab-l">
+          <div class="ab-tiny">SECTION&nbsp;·&nbsp;OUR ANGLE</div>
+          <div class="ab-head">自社業務との<br>接点</div>
+        </div>
+        <div class="ab-text">SAP移行プロジェクトを進めているクライアントへの提案において、「移行後にどのAI自律機能が使えるか」は今や必須論点。iGrafxでのAS-IS/TO-BE設計でSAP自律化後のプロセス変化を先読みした設計が求められる。</div>
+      </div>
+
+    </section>
+
+    <section class="art-slide">
+
+      <div class="ah">
+        <div class="ah-l">
+          <span class="ah-badge">BRIEF&nbsp;·&nbsp;2</span>
+          <span class="ah-src">ITmedia エンタープライズ</span>
+          <span class="ah-dot">·</span>
+          <span class="ah-date">2026 / 05 / 15</span>
+          <a href="https://www.itmedia.co.jp/enterprise/articles/2605/15/news017.html" class="ah-link" target="_blank">記事を開く ↗</a>
+        </div>
+        <div class="ah-r">
+          <span class="ah-rlbl">重要度</span>
+          <span class="ah-stars">★★★★★</span>
+        </div>
+      </div>
+
+      <div class="at">
+        <div class="at-cat">ITMEDIA エンタープライズ&nbsp;·&nbsp;ANALYSIS</div>
+        <h2 class="at-title">デンソー、SCMの内製主義から脱却へ</h2>
+        <p class="at-sub">「AIエージェント」で挑むサプライチェーン強靱化</p>
+        <div class="at-rule"></div>
+      </div>
+
+      <div class="ac">
+        <div class="ac-col">
+          <div class="clbl">LEDE&nbsp;·&nbsp;要約</div>
+          <div class="chead">3行サマリ</div>
+          <ul class="sum-list"><li><span class="cn">①</span><span class="cbody">自動車部品最大手デンソーが、200以上の国・地域でのグローバルSCMを内製システムからOracle Fusion Cloud（AIエージェント搭載）へ移行すると決断。「ユーザーがKPIを設定するとAIエージェントが目標達成に向けて自律実行する」仕組みへ転換する</span></li><li><span class="cn">②</span><span class="cbody">競争力の源泉だった内製主義を捨て、「本業とグローバル競争力向上へのコミット」を優先するという日本の製造業の戦略転換を象徴する事例。Oracle Fusion Agentic Applicationsは18カ月で1000超のエージェントを展開している</span></li><li><span class="cn">③</span><span class="cbody">Oracle Fusion Agentic Applications：18カ月で1000超エージェント展開実績（Oracle発表より）、デンソーは200以上の国・地域のSCMが対象</span></li></ul>
+        </div>
+        <div class="ac-col">
+          <div class="clbl">DEBATE&nbsp;·&nbsp;議論</div>
+          <div class="chead">想定議論ポイント</div>
+          <div class="disc-wrap">
+    <div class="disc-item">
+      <span class="qn">Q1</span>
+      <p>「競争力の源泉だった内製システム」をクラウドに移行する決断は、何が最後の後押しになったのか。地政学リスク対応と技術革新への即応という二つの要因はどちらが本質か？</p>
+    </div>
+    <div class="disc-item">
+      <span class="qn">Q2</span>
+      <p>KPIを設定するとAIが自律実行する「KPI-driven自律SCM」において、例外処理や判断の人間への差し戻しラインはどう設計するべきか？</p>
+    </div>
+    <div class="disc-item">
+      <span class="qn">Q3</span>
+      <p>デンソークラスの大手が内製主義を捨てた場合、日本の製造業の中堅・中小サプライヤーはどのような速度でSCMのクラウド/AI移行を迫られるか？</p>
+    </div></div>
+        </div>
+        <div class="ac-col">
+          <div class="clbl">OUTLOOK&nbsp;·&nbsp;次章</div>
+          <div class="chead">論理的次章</div>
+          <ul class="next-list"><li>デンソーの移行第1フェーズの成果（コスト削減率・リードタイム短縮）が発表される。</li><li>トヨタ・本田など他の大手自動車部品メーカーが追随・対比する形でSCMクラウド化方針を発表する。</li><li>「内製SCMからの移行コスト」の実態データが業界誌に出始める。</li></ul>
+        </div>
+      </div>
+
+      <div class="ab">
+        <div class="ab-l">
+          <div class="ab-tiny">SECTION&nbsp;·&nbsp;OUR ANGLE</div>
+          <div class="ab-head">自社業務との<br>接点</div>
+        </div>
+        <div class="ab-text">製造業クライアントのSCM・調達プロセスのAS-IS設計において「内製システムの限界」は頻出テーマ。デンソーの判断プロセスと移行設計はiGrafxを使ったTO-BEプロセス設計の論拠として使える。</div>
+      </div>
+
+    </section>
+
+    <section class="art-slide">
+
+      <div class="ah">
+        <div class="ah-l">
+          <span class="ah-badge">BRIEF&nbsp;·&nbsp;3</span>
+          <span class="ah-src">ITmedia エンタープライズ</span>
+          <span class="ah-dot">·</span>
+          <span class="ah-date">2026 / 05 / 18</span>
+          <a href="https://www.itmedia.co.jp/enterprise/articles/2605/18/news006.html" class="ah-link" target="_blank">記事を開く ↗</a>
+        </div>
+        <div class="ah-r">
+          <span class="ah-rlbl">重要度</span>
+          <span class="ah-stars">★★★★★</span>
+        </div>
+      </div>
+
+      <div class="at">
+        <div class="at-cat">ITMEDIA エンタープライズ&nbsp;·&nbsp;ANALYSIS</div>
+        <h2 class="at-title">ServiceNowを「AIエージェントのOS」に</h2>
+        <p class="at-sub">NVIDIAファンCEOが認める進化の現在地</p>
+        <div class="at-rule"></div>
+      </div>
+
+      <div class="ac">
+        <div class="ac-col">
+          <div class="clbl">LEDE&nbsp;·&nbsp;要約</div>
+          <div class="chead">3行サマリ</div>
+          <ul class="sum-list"><li><span class="cn">①</span><span class="cbody">ServiceNowがプラットフォームを「Now Platform」から「AI Platform」へリブランドし「AI Control Tower」を発表。AWS・Google Cloud・Azureを含む30社以上のAIサービスを統合管理し、監視・ガバナンス・セキュリティ・ROI管理を一本化</span></li><li><span class="cn">②</span><span class="cbody">CEO「AIカオス」を公式に問題提起し、「適切な管理なしではAI導入のROIが10倍から1倍に低下する」と警告。ワークフロー自動化の管理塔として、BPM/RPAが統合される受け皿になる方向性が鮮明に</span></li><li><span class="cn">③</span><span class="cbody">CVS Health：Liveエージェントチャット導入で50%コスト削減、Honeywell：知識共有AI導入で80%削減、Level 1 Service Desk AI：人間対比99%の応答品質（ServiceNow Now Forum 2026発表より）</span></li></ul>
+        </div>
+        <div class="ac-col">
+          <div class="clbl">DEBATE&nbsp;·&nbsp;議論</div>
+          <div class="chead">想定議論ポイント</div>
+          <div class="disc-wrap">
+    <div class="disc-item">
+      <span class="qn">Q1</span>
+      <p>「AIカオス」対策としてのAI Control Towerは、既存のBPMツール（iGrafx等）・RPAプラットフォーム（UiPath等）とどのレイヤーで競合・補完するか？</p>
+    </div>
+    <div class="disc-item">
+      <span class="qn">Q2</span>
+      <p>「管理なしでROIが10倍から1倍に低下する」という主張を裏付けるクライアント事例はどのような業種・規模で最初に出てくるか？</p>
+    </div>
+    <div class="disc-item">
+      <span class="qn">Q3</span>
+      <p>30社以上のAIサービスを統合管理するControl Towerが普及した場合、「AIツール単品導入のコンサル支援」より「AI管理基盤の設計支援」が主戦場になるか？</p>
+    </div></div>
+        </div>
+        <div class="ac-col">
+          <div class="clbl">OUTLOOK&nbsp;·&nbsp;次章</div>
+          <div class="chead">論理的次章</div>
+          <ul class="next-list"><li>ServiceNow AI PlatformとSAP Business AI PlatformとMicrosoft Copilot Studioの「どれをAI管理基盤にすべきか」という選定比較記事が出てくる。</li><li>AI Control Towerの日本導入第1号事例が発表される。</li><li>「AIカオス状態になった企業」の事例分析（具体的な失敗パターン）が報じられる。</li></ul>
+        </div>
+      </div>
+
+      <div class="ab">
+        <div class="ab-l">
+          <div class="ab-tiny">SECTION&nbsp;·&nbsp;OUR ANGLE</div>
+          <div class="ab-head">自社業務との<br>接点</div>
+        </div>
+        <div class="ab-text">iGrafxでのプロセス設計と、ServiceNowのAI Platform上でのプロセス実行・監視の組み合わせは「設計→実装→管理」の一貫した提案フローとして組み立てられる可能性がある。AI Control Towerへの対応は今後の提案設計の必須論点。</div>
+      </div>
+
+    </section>
+
+    <section class="art-slide">
+
+      <div class="ah">
+        <div class="ah-l">
+          <span class="ah-badge">BRIEF&nbsp;·&nbsp;4</span>
+          <span class="ah-src">日経XTECH IT</span>
+          <span class="ah-dot">·</span>
+          <span class="ah-date">2026 / 05 / 18</span>
+          <a href="https://xtech.nikkei.com/atcl/nxt/column/18/03585/051400005/" class="ah-link" target="_blank">記事を開く ↗</a>
+        </div>
+        <div class="ah-r">
+          <span class="ah-rlbl">重要度</span>
+          <span class="ah-stars">★★★★</span>
+        </div>
+      </div>
+
+      <div class="at">
+        <div class="at-cat">日経XTECH IT&nbsp;·&nbsp;ANALYSIS</div>
+        <h2 class="at-title">積水化学工業が現在進行中のDXを解説、</h2>
+        <p class="at-sub">基幹系の刷新後に進める次の挑戦</p>
+        <div class="at-rule"></div>
+      </div>
+
+      <div class="ac">
+        <div class="ac-col">
+          <div class="clbl">LEDE&nbsp;·&nbsp;要約</div>
+          <div class="chead">3行サマリ</div>
+          <ul class="sum-list"><li><span class="cn">①</span><span class="cbody">積水化学工業が2025年に会計などの基幹系システムを刷新し、現在国内外100社超のグループ会社へ展開中。次フェーズとして基幹周辺の業務システムモダナイゼーション・統合データ基盤構築・AI活用に着手</span></li><li><span class="cn">②</span><span class="cbody">「Fit to Standard（標準適合）」戦略で独自カスタマイズを排した基幹刷新を実施した後に、競争領域である周辺業務をどう変えるかという「2段階DX」の実践事例として希少性が高い</span></li><li><span class="cn">③</span><span class="cbody">国内外100社超のグループへ展開中、デジタル変革推進部長が2026年6月11〜12日の講演で詳細を公開予定（記事・イベント告知より）</span></li></ul>
+        </div>
+        <div class="ac-col">
+          <div class="clbl">DEBATE&nbsp;·&nbsp;議論</div>
+          <div class="chead">想定議論ポイント</div>
+          <div class="disc-wrap">
+    <div class="disc-item">
+      <span class="qn">Q1</span>
+      <p>「Fit to Standard」で基幹システムを刷新した後、「競争領域の周辺業務」をどの優先順位で独自設計すべきか、判断基準はどこに置くべきか？</p>
+    </div>
+    <div class="disc-item">
+      <span class="qn">Q2</span>
+      <p>国内外100社以上へのグループ展開において、海外拠点の業務プロセス標準化とローカル対応のバランスはどう設計したのか？</p>
+    </div>
+    <div class="disc-item">
+      <span class="qn">Q3</span>
+      <p>「統合データ基盤」とAI活用を同時に進める場合、データガバナンスの整備は基盤構築の前か後か、どちらが現実的か？</p>
+    </div></div>
+        </div>
+        <div class="ac-col">
+          <div class="clbl">OUTLOOK&nbsp;·&nbsp;次章</div>
+          <div class="chead">論理的次章</div>
+          <ul class="next-list"><li>2026年6月の講演でFit to Standard適用の詳細と課題が公開される。</li><li>「基幹刷新後のAI活用で何が変わったか」の具体的成果報告が出てくる。</li><li>化学・素材業界の同業他社が同様の2段階DXを発表し始める。</li></ul>
+        </div>
+      </div>
+
+      <div class="ab">
+        <div class="ab-l">
+          <div class="ab-tiny">SECTION&nbsp;·&nbsp;OUR ANGLE</div>
+          <div class="ab-head">自社業務との<br>接点</div>
+        </div>
+        <div class="ab-text">製造業・化学系クライアントへの基幹刷新後の業務改善提案において、積水化学の「2段階DX」は参照モデルとして使える。iGrafxによる周辺業務のAS-IS→TO-BE設計支援の提案根拠になる。</div>
+      </div>
+
+    </section>
+
+    <section class="art-slide">
+
+      <div class="ah">
+        <div class="ah-l">
+          <span class="ah-badge">BRIEF&nbsp;·&nbsp;5</span>
+          <span class="ah-src">日経XTECH IT</span>
+          <span class="ah-dot">·</span>
+          <span class="ah-date">2026 / 05 / 18</span>
+          <a href="https://xtech.nikkei.com/atcl/nxt/column/18/03609/051400005/" class="ah-link" target="_blank">記事を開く ↗</a>
+        </div>
+        <div class="ah-r">
+          <span class="ah-rlbl">重要度</span>
+          <span class="ah-stars">★★★★</span>
+        </div>
+      </div>
+
+      <div class="at">
+        <div class="at-cat">日経XTECH IT&nbsp;·&nbsp;ANALYSIS</div>
+        <h2 class="at-title">SBI新生銀が挑む次世代勘定系への刷新、難所は脱・インド製パッケージ</h2>
+        
+        <div class="at-rule"></div>
+      </div>
+
+      <div class="ac">
+        <div class="ac-col">
+          <div class="clbl">LEDE&nbsp;·&nbsp;要約</div>
+          <div class="chead">3行サマリ</div>
+          <ul class="sum-list"><li><span class="cn">①</span><span class="cbody">SBI新生銀行（預金17兆円規模）が現行のインド製パッケージ「FLEXCUBE」から、フューチャーアーキテクト×SBI地方創生バンキングシステム共同開発の次世代勘定系（AWS上でのパブリッククラウド動作）へ移行。2029年度下期〜2030年度上期の稼働を目指す</span></li><li><span class="cn">②</span><span class="cbody">メガバンク・地銀問わず「レガシー勘定系刷新」が最大のDX課題である中、FLEXCUBEのような外資製パッケージ依存から国産クラウドネイティブへの転換という選択肢が実案件として具体化した</span></li><li><span class="cn">③</span><span class="cbody">17兆円規模の銀行が2029〜2030年稼働目標で勘定系刷新、参考事例として福島銀行（預金約7500億円）・島根銀行（同約5000億円）への展開実績あり（記事より）</span></li></ul>
+        </div>
+        <div class="ac-col">
+          <div class="clbl">DEBATE&nbsp;·&nbsp;議論</div>
+          <div class="chead">想定議論ポイント</div>
+          <div class="disc-wrap">
+    <div class="disc-item">
+      <span class="qn">Q1</span>
+      <p>「インド製パッケージFLEXCUBEからの脱却」が難所とされる具体的な理由（データ移行・カスタマイズ除去・並行稼働など）はどこにあり、他行でも同様の課題が発生するか？</p>
+    </div>
+    <div class="disc-item">
+      <span class="qn">Q2</span>
+      <p>AWSパブリッククラウド上での勘定系稼働は金融庁の監督規制・クラウドセキュリティ要件とどのような摩擦を生むか、どう解決しているか？</p>
+    </div>
+    <div class="disc-item">
+      <span class="qn">Q3</span>
+      <p>SBI新生銀の事例が成功した場合、同規模（10〜20兆円台）の地銀・第二地銀がFLEXCUBE等から同様に移行するドミノが起きるか？</p>
+    </div></div>
+        </div>
+        <div class="ac-col">
+          <div class="clbl">OUTLOOK&nbsp;·&nbsp;次章</div>
+          <div class="chead">論理的次章</div>
+          <ul class="next-list"><li>FLEXCUBEからの移行難所の詳細記事（データ変換・業務プロセス再整理の実態）が出てくる。</li><li>金融庁がクラウド勘定系に関するガイドラインを整備・更新する。</li><li>他の地銀が「同様の勘定系刷新に向けてRFPを出した」という報道が出始める。</li></ul>
+        </div>
+      </div>
+
+      <div class="ab">
+        <div class="ab-l">
+          <div class="ab-tiny">SECTION&nbsp;·&nbsp;OUR ANGLE</div>
+          <div class="ab-head">自社業務との<br>接点</div>
+        </div>
+        <div class="ab-text">金融業界クライアントの勘定系・基幹システム刷新プロジェクトにおいて、このAS-IS（FLEXCUBE依存）→TO-BE（クラウドネイティブ）のプロセス移行設計はiGrafxの活用場面として直結する。</div>
+      </div>
+
+    </section>
+
+    <section class="art-slide">
+
+      <div class="ah">
+        <div class="ah-l">
+          <span class="ah-badge">BRIEF&nbsp;·&nbsp;6</span>
+          <span class="ah-src">ITmedia エンタープライズ</span>
+          <span class="ah-dot">·</span>
+          <span class="ah-date">2026 / 05 / 15</span>
+          <a href="https://www.itmedia.co.jp/enterprise/articles/2605/15/news046.html" class="ah-link" target="_blank">記事を開く ↗</a>
+        </div>
+        <div class="ah-r">
+          <span class="ah-rlbl">重要度</span>
+          <span class="ah-stars">★★★★</span>
+        </div>
+      </div>
+
+      <div class="at">
+        <div class="at-cat">ITMEDIA エンタープライズ&nbsp;·&nbsp;ANALYSIS</div>
+        <h2 class="at-title">Anthropic、中小企業用AI業務支援「Claude for Small Business」発表</h2>
+        <p class="at-sub">15種のAIエージェントが作業を肩代わり</p>
+        <div class="at-rule"></div>
+      </div>
+
+      <div class="ac">
+        <div class="ac-col">
+          <div class="clbl">LEDE&nbsp;·&nbsp;要約</div>
+          <div class="chead">3行サマリ</div>
+          <ul class="sum-list"><li><span class="cn">①</span><span class="cbody">AnthropicがClaude Coworkのプラグイン「Claude for Small Business」を発表。QuickBooks（会計）・PayPal・HubSpot（マーケティング）・Canva・DocuSign・Google Workspace・MS365と連携し、請求書作成・キャンペーン管理・契約書処理などを業務担当者が自然言語で指示するだけで実行</span></li><li><span class="cn">②</span><span class="cbody">「専任IT担当者のいない中小企業がAIエージェントで業務を代行させる」モデルが具体化。SaaS単品利用からAIオーケストレーション層への移行を中小企業でも現実にする布石</span></li><li><span class="cn">③</span><span class="cbody">QuickBooksで30日以内の請求書作成、HubSpotでキャンペーン管理と分析、Canvaで投稿画像生成が自然言語で実行可能（Anthropic発表より）</span></li></ul>
+        </div>
+        <div class="ac-col">
+          <div class="clbl">DEBATE&nbsp;·&nbsp;議論</div>
+          <div class="chead">想定議論ポイント</div>
+          <div class="disc-wrap">
+    <div class="disc-item">
+      <span class="qn">Q1</span>
+      <p>「ITが得意でない中小企業オーナーがAIエージェントで業務を代行させる」モデルが普及した場合、中小企業向けITコンサルタント・ITコーディネータの役割はどこに移るか？</p>
+    </div>
+    <div class="disc-item">
+      <span class="qn">Q2</span>
+      <p>複数SaaSをAIがオーケストレーションする際のデータセキュリティ・情報漏洩リスクは、中小企業のリスク管理体制で対応できるか？</p>
+    </div>
+    <div class="disc-item">
+      <span class="qn">Q3</span>
+      <p>QuickBooks・HubSpot・DocuSignといった欧米SaaS中心の構成は日本の中小企業実態（弥生・freee・kintone利用）と乖離があるか、日本展開でどう対応するか？</p>
+    </div></div>
+        </div>
+        <div class="ac-col">
+          <div class="clbl">OUTLOOK&nbsp;·&nbsp;次章</div>
+          <div class="chead">論理的次章</div>
+          <ul class="next-list"><li>日本市場向けに弥生・freee・kintone等国産SaaSとの連携版「Claude for Small Business Japan」の発表が出てくる。</li><li>「AIが作った請求書・契約書のミス」事例が初めて報告される。</li><li>競合として「Salesforce Agentforce for SMB」や「Microsoft 365 Copilot for SMB」が対抗機能を発表する。</li></ul>
+        </div>
+      </div>
+
+      <div class="ab">
+        <div class="ab-l">
+          <div class="ab-tiny">SECTION&nbsp;·&nbsp;OUR ANGLE</div>
+          <div class="ab-head">自社業務との<br>接点</div>
+        </div>
+        <div class="ab-text">中小企業クライアントへの業務改善提案において「AIエージェントによるSaaS横断業務代行」は今後の標準提案パターンになりうる。ITコーディネータとしての価値をどこに再定義するかの問い直しを迫るニュース。</div>
+      </div>
+
+    </section>
+
+    <section class="art-slide">
+
+      <div class="ah">
+        <div class="ah-l">
+          <span class="ah-badge">BRIEF&nbsp;·&nbsp;7</span>
+          <span class="ah-src">ITmedia ビジネス</span>
+          <span class="ah-dot">·</span>
+          <span class="ah-date">2026 / 05 / 16</span>
+          <a href="https://www.itmedia.co.jp/business/articles/2605/16/news002.html" class="ah-link" target="_blank">記事を開く ↗</a>
+        </div>
+        <div class="ah-r">
+          <span class="ah-rlbl">重要度</span>
+          <span class="ah-stars">★★★★</span>
+        </div>
+      </div>
+
+      <div class="at">
+        <div class="at-cat">ITMEDIA ビジネス&nbsp;·&nbsp;ANALYSIS</div>
+        <h2 class="at-title">AIを導入しても、なぜ格差は広がるのか</h2>
+        <p class="at-sub">7割の企業が感じる「使える人」との差</p>
+        <div class="at-rule"></div>
+      </div>
+
+      <div class="ac">
+        <div class="ac-col">
+          <div class="clbl">LEDE&nbsp;·&nbsp;要約</div>
+          <div class="chead">3行サマリ</div>
+          <ul class="sum-list"><li><span class="cn">①</span><span class="cbody">AI活用を人事評価に反映する企業が増える一方、7割超の企業が「AIを使える人」と「使えない人」の格差を実感していると判明。先進企業は制度整備に加え、学習文化の醸成と心理的安全性の確保に取り組んでいる</span></li><li><span class="cn">②</span><span class="cbody">「ツールを入れれば全員が使う」という前提が崩れており、チェンジマネジメント・スキル育成・評価制度設計の三位一体での対応が組織的AI活用の分岐点になることが数値で裏付けられた</span></li><li><span class="cn">③</span><span class="cbody">7割超の企業がAI活用格差を実感（調査ベース、媒体記事より）、AI活用を人事評価に反映する企業が増加傾向</span></li></ul>
+        </div>
+        <div class="ac-col">
+          <div class="clbl">DEBATE&nbsp;·&nbsp;議論</div>
+          <div class="chead">想定議論ポイント</div>
+          <div class="disc-wrap">
+    <div class="disc-item">
+      <span class="qn">Q1</span>
+      <p>AI活用格差は「ツールへの慣れ」の問題か「業務設計の問題」か、どちらを先に解決すべきか？</p>
+    </div>
+    <div class="disc-item">
+      <span class="qn">Q2</span>
+      <p>AI活用能力を人事評価に組み込むとき、どのような評価指標（成果ベース・行動ベース・スキルベース）が公平かつ機能するか？</p>
+    </div>
+    <div class="disc-item">
+      <span class="qn">Q3</span>
+      <p>「心理的安全性の確保」がAIツール定着に影響する具体的なメカニズムとは何か、組織規模・業種によって違いはあるか？</p>
+    </div></div>
+        </div>
+        <div class="ac-col">
+          <div class="clbl">OUTLOOK&nbsp;·&nbsp;次章</div>
+          <div class="chead">論理的次章</div>
+          <ul class="next-list"><li>「AI活用格差を解消した企業」の具体的施策と成果の事例集が各コンサル・人材系企業から出てくる。</li><li>AI活用を人事評価に組み込んだ企業での「不公平感」や「評価トラブル」の事例が報告される。</li><li>AI格差問題を受け、政府・経産省がAIリテラシー人材育成の支援策を強化する。</li></ul>
+        </div>
+      </div>
+
+      <div class="ab">
+        <div class="ab-l">
+          <div class="ab-tiny">SECTION&nbsp;·&nbsp;OUR ANGLE</div>
+          <div class="ab-head">自社業務との<br>接点</div>
+        </div>
+        <div class="ab-text">DX推進・AI導入コンサルにおける「チェンジマネジメント」フェーズの設計根拠として直結。「AIを入れたのに使われない」問題の構造的分析として、クライアントへの提案書・診断資料に活用できる。</div>
+      </div>
+
+    </section>
+
+    <section class="art-slide">
+
+      <div class="ah">
+        <div class="ah-l">
+          <span class="ah-badge">BRIEF&nbsp;·&nbsp;8</span>
+          <span class="ah-src">日経XTECH IT</span>
+          <span class="ah-dot">·</span>
+          <span class="ah-date">2026 / 05 / 15</span>
+          <a href="https://xtech.nikkei.com/atcl/nxt/column/18/00001/11746/" class="ah-link" target="_blank">記事を開く ↗</a>
+        </div>
+        <div class="ah-r">
+          <span class="ah-rlbl">重要度</span>
+          <span class="ah-stars">★★★★</span>
+        </div>
+      </div>
+
+      <div class="at">
+        <div class="at-cat">日経XTECH IT&nbsp;·&nbsp;ANALYSIS</div>
+        <h2 class="at-title">「客先常駐」も、OpenAIがAI導入の新会社</h2>
+        <p class="at-sub">問われるIT部門やSIerの存在意義</p>
+        <div class="at-rule"></div>
+      </div>
+
+      <div class="ac">
+        <div class="ac-col">
+          <div class="clbl">LEDE&nbsp;·&nbsp;要約</div>
+          <div class="chead">3行サマリ</div>
+          <ul class="sum-list"><li><span class="cn">①</span><span class="cbody">OpenAIが投資ファンドと組んでAI導入支援新会社を設立し、エンジニアを顧客企業に客先常駐させてAIシステムの導入を直接支援するモデルを開始。日本のSIer型「人月商売」に近い形態でOpenAIが乗り込んでくる</span></li><li><span class="cn">②</span><span class="cbody">AIモデルの提供者が自らSIer・ITコンサルの役割を担い始めたことで、既存のIT部門・SIer・コンサルファームのバリューチェーン上の立ち位置が根本から問われるターニングポイント</span></li><li><span class="cn">③</span><span class="cbody">OpenAI Deployment Company設立（19社の設立パートナー）、エンジニアを顧客企業に常駐させてAI導入を直接支援（記事・日経クロステック報道より）</span></li></ul>
+        </div>
+        <div class="ac-col">
+          <div class="clbl">DEBATE&nbsp;·&nbsp;議論</div>
+          <div class="chead">想定議論ポイント</div>
+          <div class="disc-wrap">
+    <div class="disc-item">
+      <span class="qn">Q1</span>
+      <p>OpenAIが「客先常駐」モデルで導入支援に乗り出す場合、日本のSIer・コンサルファームが守れる差別化領域（業界知識・既存システム接続・チェンジマネジメント等）はどこか？</p>
+    </div>
+    <div class="disc-item">
+      <span class="qn">Q2</span>
+      <p>AIモデルベンダーが導入支援まで担う「垂直統合モデル」は、クライアント企業にとってベンダーロックインリスクをどの程度高めるか？</p>
+    </div>
+    <div class="disc-item">
+      <span class="qn">Q3</span>
+      <p>「AI導入支援」という新市場での競争構図（OpenAI・Anthropic・Google・SAP・SIer・コンサルファーム）はどのように整理されていくか？</p>
+    </div></div>
+        </div>
+        <div class="ac-col">
+          <div class="clbl">OUTLOOK&nbsp;·&nbsp;次章</div>
+          <div class="chead">論理的次章</div>
+          <ul class="next-list"><li>OpenAI Deployment Companyの日本市場参入・パートナー企業の公表が出てくる。</li><li>日本のSIer大手（富士通・NEC・NTTデータ等）が「OpenAI常駐との競合・協業」に関する公式方針を発表する。</li><li>「OpenAI常駐チームとSIer既存部隊の摩擦」という現場レポートが出始める。</li></ul>
+        </div>
+      </div>
+
+      <div class="ab">
+        <div class="ab-l">
+          <div class="ab-tiny">SECTION&nbsp;·&nbsp;OUR ANGLE</div>
+          <div class="ab-head">自社業務との<br>接点</div>
+        </div>
+        <div class="ab-text">業務改善コンサルとして「AIモデルベンダーとどう棲み分けるか」を今すぐ整理する必要がある。業界知識×プロセス設計×チェンジマネジメントという組み合わせが、OpenAIに代替されにくい差別化の核として明確化できる。</div>
+      </div>
+
+    </section>
+
+    <section class="art-slide">
+
+      <div class="ah">
+        <div class="ah-l">
+          <span class="ah-badge">BRIEF&nbsp;·&nbsp;9</span>
+          <span class="ah-src">ITmedia エンタープライズ</span>
+          <span class="ah-dot">·</span>
+          <span class="ah-date">2026 / 05 / 14</span>
+          <a href="https://www.itmedia.co.jp/enterprise/articles/2605/14/news030.html" class="ah-link" target="_blank">記事を開く ↗</a>
+        </div>
+        <div class="ah-r">
+          <span class="ah-rlbl">重要度</span>
+          <span class="ah-stars">★★★★</span>
+        </div>
+      </div>
+
+      <div class="at">
+        <div class="at-cat">ITMEDIA エンタープライズ&nbsp;·&nbsp;ANALYSIS</div>
+        <h2 class="at-title">トヨタファイナンスがAIエージェントを問い合わせ対応業務に導入</h2>
+        <p class="at-sub">「非定型業務」を自動化</p>
+        <div class="at-rule"></div>
+      </div>
+
+      <div class="ac">
+        <div class="ac-col">
+          <div class="clbl">LEDE&nbsp;·&nbsp;要約</div>
+          <div class="chead">3行サマリ</div>
+          <ul class="sum-list"><li><span class="cn">①</span><span class="cbody">トヨタファイナンスがWebカスタマーサポートの問い合わせ対応にUiPath Platform（Agent Builder in UiPath Studio）を導入し、非定型業務を自動化。処理時間を1件13分から4分に短縮</span></li><li><span class="cn">②</span><span class="cbody">定型業務を対象にしてきたRPAが「非定型の問い合わせ対応」にも展開できることを金融大手の実案件で証明。AIエージェント×UiPathの組み合わせが業務自動化の新標準として具体化</span></li><li><span class="cn">③</span><span class="cbody">1件あたりの処理時間：13分→4分（約69%短縮）（UiPath導入事例より）</span></li></ul>
+        </div>
+        <div class="ac-col">
+          <div class="clbl">DEBATE&nbsp;·&nbsp;議論</div>
+          <div class="chead">想定議論ポイント</div>
+          <div class="disc-wrap">
+    <div class="disc-item">
+      <span class="qn">Q1</span>
+      <p>「非定型業務の自動化」の境界線（どこまでAIエージェントに任せ、どこから人間が介入するか）はどう設計したのか、業種・業務によってどう変わるか？</p>
+    </div>
+    <div class="disc-item">
+      <span class="qn">Q2</span>
+      <p>UiPathのAgent BuilderとRPAの組み合わせが金融系カスタマーサポートで有効な場合、コールセンター全体の業務設計はどう変わるか？</p>
+    </div>
+    <div class="disc-item">
+      <span class="qn">Q3</span>
+      <p>13分→4分という69%短縮の内訳（情報検索・回答生成・承認の各フェーズで何が削減されたか）が分からないと横展開できないが、どのような情報開示が望まれるか？</p>
+    </div></div>
+        </div>
+        <div class="ac-col">
+          <div class="clbl">OUTLOOK&nbsp;·&nbsp;次章</div>
+          <div class="chead">論理的次章</div>
+          <ul class="next-list"><li>トヨタファイナンスの第2フェーズ（コールセンター音声対応への拡張など）が発表される。</li><li>他の自動車系金融（本田ファイナンス・日産フィナンシャル等）の追随事例が出てくる。</li><li>「AIエージェントが答えを誤って顧客に提供した」最初のCS業務での事故事例報告が出る。</li></ul>
+        </div>
+      </div>
+
+      <div class="ab">
+        <div class="ab-l">
+          <div class="ab-tiny">SECTION&nbsp;·&nbsp;OUR ANGLE</div>
+          <div class="ab-head">自社業務との<br>接点</div>
+        </div>
+        <div class="ab-text">金融クライアントのカスタマーサポート業務プロセス設計（iGrafx AS-IS）において「AIエージェント×UiPath」によるTO-BE設計提案が具体的に可能になった。処理時間の削減根拠として直接使える数値。</div>
+      </div>
+
+    </section>
+
+    <section class="art-slide">
+
+      <div class="ah">
+        <div class="ah-l">
+          <span class="ah-badge">BRIEF&nbsp;·&nbsp;10</span>
+          <span class="ah-src">ITmedia エンタープライズ</span>
+          <span class="ah-dot">·</span>
+          <span class="ah-date">2026 / 05 / 15</span>
+          <a href="https://www.itmedia.co.jp/enterprise/articles/2605/15/news050.html" class="ah-link" target="_blank">記事を開く ↗</a>
+        </div>
+        <div class="ah-r">
+          <span class="ah-rlbl">重要度</span>
+          <span class="ah-stars">★★★★</span>
+        </div>
+      </div>
+
+      <div class="at">
+        <div class="at-cat">ITMEDIA エンタープライズ&nbsp;·&nbsp;ANALYSIS</div>
+        <h2 class="at-title">アクセンチュアとGoogleが新プログラム</h2>
+        <p class="at-sub">AI全社展開で「つまづく」企業を支援へ</p>
+        <div class="at-rule"></div>
+      </div>
+
+      <div class="ac">
+        <div class="ac-col">
+          <div class="clbl">LEDE&nbsp;·&nbsp;要約</div>
+          <div class="chead">3行サマリ</div>
+          <ul class="sum-list"><li><span class="cn">①</span><span class="cbody">アクセンチュアとGoogle Cloudが、試験導入後のAI全社展開で壁にぶつかる企業向けの新プログラムを発表。「PoC止まり・部門止まり」を突破するための実装支援に特化</span></li><li><span class="cn">②</span><span class="cbody">「AIのPoC貧乏問題」をコンサル最大手とGoogle Cloud最大手パートナーが公式に課題認定したことで、「AI全社展開支援」が独立したサービス市場として立ち上がりつつある</span></li><li><span class="cn">③</span><span class="cbody">アクセンチュアとGoogle Cloudの戦略的パートナーシップ強化（発表内容より）、先週のAnthropicとの協業に加えてGoogleとも大型提携が同週に重複発表</span></li></ul>
+        </div>
+        <div class="ac-col">
+          <div class="clbl">DEBATE&nbsp;·&nbsp;議論</div>
+          <div class="chead">想定議論ポイント</div>
+          <div class="disc-wrap">
+    <div class="disc-item">
+      <span class="qn">Q1</span>
+      <p>「AI全社展開で壁にぶつかる」企業に共通する失敗パターン（技術・組織・プロセス・予算など）は何か、どれが最も解決困難か？</p>
+    </div>
+    <div class="disc-item">
+      <span class="qn">Q2</span>
+      <p>アクセンチュアがAnthropicとGoogleの両方と大型協業を同時に進める戦略は、クライアント企業にとってどのような意味を持つか（囲い込みリスクか・選択肢の広さか）？</p>
+    </div>
+    <div class="disc-item">
+      <span class="qn">Q3</span>
+      <p>「PoC→全社展開」の壁を突破するために、業務改善コンサルが持つ「プロセス設計・組織変革知見」とテック大手のプログラムはどう組み合わさるべきか？</p>
+    </div></div>
+        </div>
+        <div class="ac-col">
+          <div class="clbl">OUTLOOK&nbsp;·&nbsp;次章</div>
+          <div class="chead">論理的次章</div>
+          <ul class="next-list"><li>プログラムの具体的な価格・スコープ・採用事例が公開される。</li><li>「アクセンチュア×Google」のPoC→展開支援と「アクセンチュア×Anthropic」の変革支援がどう役割分担されるかが明確になる。</li><li>「AI全社展開支援」市場にIBM・PwC・Deloitteが類似プログラムを相次いで発表する。</li></ul>
+        </div>
+      </div>
+
+      <div class="ab">
+        <div class="ab-l">
+          <div class="ab-tiny">SECTION&nbsp;·&nbsp;OUR ANGLE</div>
+          <div class="ab-head">自社業務との<br>接点</div>
+        </div>
+        <div class="ab-text">競合コンサルが「PoC→全社展開支援」を独立市場として確立しようとしている。この波に乗るか、補完的な差別化ポジションを取るかの戦略判断が迫られる。iGrafxによる「展開前のプロセス標準化設計」は全社展開の前提として機能する。</div>
+      </div>
+
+    </section>
+
+    <section class="art-slide">
+
+      <div class="ah">
+        <div class="ah-l">
+          <span class="ah-badge">BRIEF&nbsp;·&nbsp;11</span>
+          <span class="ah-src">ITmedia ビジネス</span>
+          <span class="ah-dot">·</span>
+          <span class="ah-date">2026 / 05 / 18</span>
+          <a href="https://www.itmedia.co.jp/business/articles/2605/18/news036.html" class="ah-link" target="_blank">記事を開く ↗</a>
+        </div>
+        <div class="ah-r">
+          <span class="ah-rlbl">重要度</span>
+          <span class="ah-stars">★★★</span>
+        </div>
+      </div>
+
+      <div class="at">
+        <div class="at-cat">ITMEDIA ビジネス&nbsp;·&nbsp;ANALYSIS</div>
+        <h2 class="at-title">伊藤忠商事や三菱ケミカルなど16社が参画</h2>
+        <p class="at-sub">大手企業の「暗黙知」を活用する新プロジェクト</p>
+        <div class="at-rule"></div>
+      </div>
+
+      <div class="ac">
+        <div class="ac-col">
+          <div class="clbl">LEDE&nbsp;·&nbsp;要約</div>
+          <div class="chead">3行サマリ</div>
+          <ul class="sum-list"><li><span class="cn">①</span><span class="cbody">ストックマークが伊藤忠商事・三菱ケミカルなど16社と「企業暗黙知のAI-Ready化」実証実験を開始。Excel・PDF・文書データ等に眠る暗黙知を①データ準備→②ガバナンス構築→③学習サイクルの3段階でAI学習可能な形に変換する</span></li><li><span class="cn">②</span><span class="cbody">「AIに何を食わせるか」というデータ品質問題に大手16社が正面から取り組んだことで、「知識資産の整理・構造化」というプロセスコンサルの需要が可視化された</span></li><li><span class="cn">③</span><span class="cbody">参画16社（伊藤忠商事・三菱ケミカル等）、3段階の変換プロセス（データ準備→ガバナンス→学習サイクル）（ストックマーク発表より）</span></li></ul>
+        </div>
+        <div class="ac-col">
+          <div class="clbl">DEBATE&nbsp;·&nbsp;議論</div>
+          <div class="chead">想定議論ポイント</div>
+          <div class="disc-wrap">
+    <div class="disc-item">
+      <span class="qn">Q1</span>
+      <p>「暗黙知のAI-Ready化」において、最も難しいステップはデータ準備・ガバナンス構築・学習サイクルのどれか、業種によってどう異なるか？</p>
+    </div>
+    <div class="disc-item">
+      <span class="qn">Q2</span>
+      <p>企業の暗黙知（マニュアル・ノウハウ・判断基準）をAIに学習させた場合、「熟練者が退職した後も知識が残る」という効果と「知識の固定化・陳腐化リスク」はどうバランスを取るか？</p>
+    </div>
+    <div class="disc-item">
+      <span class="qn">Q3</span>
+      <p>16社が共同で実証実験する形態は、個社情報の秘匿とベストプラクティス共有をどう両立させるか？</p>
+    </div></div>
+        </div>
+        <div class="ac-col">
+          <div class="clbl">OUTLOOK&nbsp;·&nbsp;次章</div>
+          <div class="chead">論理的次章</div>
+          <ul class="next-list"><li>3ヶ月後の実証実験結果（何社でどの程度の効果があったか）の中間発表が出てくる。</li><li>「暗黙知AI-Ready化」サービスを提供する競合企業（コグニティ・PFN等）が類似プログラムを打ち出す。</li><li>「AIに学習させた暗黙知が外部流出した」情報漏洩事例の最初の報告が出る。</li></ul>
+        </div>
+      </div>
+
+      <div class="ab">
+        <div class="ab-l">
+          <div class="ab-tiny">SECTION&nbsp;·&nbsp;OUR ANGLE</div>
+          <div class="ab-head">自社業務との<br>接点</div>
+        </div>
+        <div class="ab-text">業務改善コンサルが保有する「業務分析・プロセス可視化の知見」は、まさに暗黙知を構造化する作業そのもの。iGrafxでのAS-IS設計→知識のデジタル化→AI学習素材化というフローの提案根拠になる。</div>
+      </div>
+
+    </section>
+
+    <section class="art-slide">
+
+      <div class="ah">
+        <div class="ah-l">
+          <span class="ah-badge">BRIEF&nbsp;·&nbsp;12</span>
+          <span class="ah-src">ITmedia エンタープライズ</span>
+          <span class="ah-dot">·</span>
+          <span class="ah-date">2026 / 05 / 14</span>
+          <a href="https://www.itmedia.co.jp/enterprise/articles/2605/15/news007.html" class="ah-link" target="_blank">記事を開く ↗</a>
+        </div>
+        <div class="ah-r">
+          <span class="ah-rlbl">重要度</span>
+          <span class="ah-stars">★★★</span>
+        </div>
+      </div>
+
+      <div class="at">
+        <div class="at-cat">ITMEDIA エンタープライズ&nbsp;·&nbsp;ANALYSIS</div>
+        <h2 class="at-title">「遅れることは許されない」</h2>
+        <p class="at-sub">NVIDIAファンCEOが断言する、AIエージェントによるビジネス構造の激変</p>
+        <div class="at-rule"></div>
+      </div>
+
+      <div class="ac">
+        <div class="ac-col">
+          <div class="clbl">LEDE&nbsp;·&nbsp;要約</div>
+          <div class="chead">3行サマリ</div>
+          <ul class="sum-list"><li><span class="cn">①</span><span class="cbody">NVIDIAのジェンスン・ファン CEOが「AIエージェントは検索・要約から自律的なタスク完遂へ進化した」と断言。Adobeとの提携による制作業務の自動化や、AIが「伴走者」として人間の生産性を倍加させる新たな雇用パラダイムを提示</span></li><li><span class="cn">②</span><span class="cbody">AI半導体最大手のCEOが「遅れることは許されない」と経営者を直接煽るメッセージは、DX投資の経営判断に対して強い緊急性の文脈を作り出す</span></li><li><span class="cn">③</span><span class="cbody">世界半導体売上高が前年同月比79.2%増、単月で995億ドルに達し1000億ドルに肉薄（SIA 2026年3月データ、同日別記事より）という市場背景</span></li></ul>
+        </div>
+        <div class="ac-col">
+          <div class="clbl">DEBATE&nbsp;·&nbsp;議論</div>
+          <div class="chead">想定議論ポイント</div>
+          <div class="disc-wrap">
+    <div class="disc-item">
+      <span class="qn">Q1</span>
+      <p>AIエージェントが「検索・要約」から「タスク完遂」に進化する場合、どの業務カテゴリで最初に「人間の役割が補助」に変わるか？</p>
+    </div>
+    <div class="disc-item">
+      <span class="qn">Q2</span>
+      <p>ファンCEOの「遅れることは許されない」という発言が経営者の意思決定に与える影響は、日本企業の「様子見文化」とどう衝突・融合するか？</p>
+    </div>
+    <div class="disc-item">
+      <span class="qn">Q3</span>
+      <p>AIが「伴走者」となる新雇用パラダイムで、人間に残る「AIでは代替されない価値」の具体的な定義はどの業種でどう決まるか？</p>
+    </div></div>
+        </div>
+        <div class="ac-col">
+          <div class="clbl">OUTLOOK&nbsp;·&nbsp;次章</div>
+          <div class="chead">論理的次章</div>
+          <ul class="next-list"><li>NVIDIAとAdobeの制作業務自動化プラットフォームの具体的な機能・対象業務が発表される。</li><li>「AIエージェントにタスクを完遂させたが品質が低く手戻りが大量発生した」最初の報告事例が出てくる。</li><li>「遅れた企業」と「先行した企業」の業績差が定量比較された調査レポートが出る。</li></ul>
+        </div>
+      </div>
+
+      <div class="ab">
+        <div class="ab-l">
+          <div class="ab-tiny">SECTION&nbsp;·&nbsp;OUR ANGLE</div>
+          <div class="ab-head">自社業務との<br>接点</div>
+        </div>
+        <div class="ab-text">クライアントへのDX投資提案において「なぜ今か」という緊急性の論拠として使える。AIエージェントのタスク完遂能力への言及は、業務プロセス設計（iGrafx）でのTO-BE像に「AIエージェント層」を組み込む根拠になる。</div>
+      </div>
+
+    </section>
+
+    <section class="art-slide">
+
+      <div class="ah">
+        <div class="ah-l">
+          <span class="ah-badge">BRIEF&nbsp;·&nbsp;13</span>
+          <span class="ah-src">ITmedia AI+</span>
+          <span class="ah-dot">·</span>
+          <span class="ah-date">2026 / 05 / 15</span>
+          <a href="https://monoist.itmedia.co.jp/mn/articles/2605/15/news019.html" class="ah-link" target="_blank">記事を開く ↗</a>
+        </div>
+        <div class="ah-r">
+          <span class="ah-rlbl">重要度</span>
+          <span class="ah-stars">★★★</span>
+        </div>
+      </div>
+
+      <div class="at">
+        <div class="at-cat">ITMEDIA AI+&nbsp;·&nbsp;ANALYSIS</div>
+        <h2 class="at-title">AIエージェントが2D図面を読図して3D化、</h2>
+        <p class="at-sub">renueが図面SaaSを機能強化</p>
+        <div class="at-rule"></div>
+      </div>
+
+      <div class="ac">
+        <div class="ac-col">
+          <div class="clbl">LEDE&nbsp;·&nbsp;要約</div>
+          <div class="chead">3行サマリ</div>
+          <ul class="sum-list"><li><span class="cn">①</span><span class="cbody">renueが「Drawing Agent」をアップデート。AIエージェントが図面ごとに適したツールを自動選択して2D図面を読図し、3Dモデルを自動生成。さらに最小限の設計情報から2D図面を自動生成する逆方向の機能も実装</span></li><li><span class="cn">②</span><span class="cbody">設計・製造現場の「図面データのデジタル化」という長年の課題にAIエージェントが切り込んだ実例として、エンジニアリング業務プロセスのAS-IS（紙・2D図面管理）→TO-BE（AI自動3D化）設計の参照事例になる</span></li><li><span class="cn">③</span><span class="cbody">AIエージェントが図面に応じたツール自動選択で読図・3D生成（renue発表より）、図面データが少ない領域への対応も実装</span></li></ul>
+        </div>
+        <div class="ac-col">
+          <div class="clbl">DEBATE&nbsp;·&nbsp;議論</div>
+          <div class="chead">想定議論ポイント</div>
+          <div class="disc-wrap">
+    <div class="disc-item">
+      <span class="qn">Q1</span>
+      <p>2D→3D変換の精度・エラー率が実務水準に達するまでに必要な学習データ量・検証工数はどの程度か、製造業での実用化タイムラインは？</p>
+    </div>
+    <div class="disc-item">
+      <span class="qn">Q2</span>
+      <p>AI生成の3Dモデルに設計者が「承認・修正」する業務フローは、既存の設計審査プロセスとどう統合されるか？</p>
+    </div>
+    <div class="disc-item">
+      <span class="qn">Q3</span>
+      <p>図面データのAI学習には企業秘密の設計情報が含まれるが、クラウドSaaS利用時のデータ主権・秘匿性はどう確保するか？</p>
+    </div></div>
+        </div>
+        <div class="ac-col">
+          <div class="clbl">OUTLOOK&nbsp;·&nbsp;次章</div>
+          <div class="chead">論理的次章</div>
+          <ul class="next-list"><li>製造大手（トヨタ・パナソニック等）がDrawing Agent類似ツールの試験導入報告を出してくる。</li><li>「AIが生成した3Dモデルの設計ミスによる製品不具合」という品質問題の事例が出る。</li><li>設計ツール大手（Autodesk・Dassault）が対抗機能を発表する。</li></ul>
+        </div>
+      </div>
+
+      <div class="ab">
+        <div class="ab-l">
+          <div class="ab-tiny">SECTION&nbsp;·&nbsp;OUR ANGLE</div>
+          <div class="ab-head">自社業務との<br>接点</div>
+        </div>
+        <div class="ab-text">製造・エンジニアリング業界クライアントの設計・図面管理業務プロセス改善（iGrafy AS-IS設計）において「図面DX」は頻出テーマ。AI読図×3D化の具体事例として提案資料に組み込める。</div>
+      </div>
+
+    </section>
+
+    <section class="art-slide">
+
+      <div class="ah">
+        <div class="ah-l">
+          <span class="ah-badge">BRIEF&nbsp;·&nbsp;14</span>
+          <span class="ah-src">ITmedia AI+</span>
+          <span class="ah-dot">·</span>
+          <span class="ah-date">2026 / 05 / 18</span>
+          <a href="https://www.itmedia.co.jp/aiplus/articles/2605/15/news013.html" class="ah-link" target="_blank">記事を開く ↗</a>
+        </div>
+        <div class="ah-r">
+          <span class="ah-rlbl">重要度</span>
+          <span class="ah-stars">★★★</span>
+        </div>
+      </div>
+
+      <div class="at">
+        <div class="at-cat">ITMEDIA AI+&nbsp;·&nbsp;ANALYSIS</div>
+        <h2 class="at-title">「ポンコツ」と呼ばれたM365 Copilotの逆転劇、GPT-5が転換点</h2>
+        <p class="at-sub">活用の秘訣は&quot;脱・プロンプト職人&quot;</p>
+        <div class="at-rule"></div>
+      </div>
+
+      <div class="ac">
+        <div class="ac-col">
+          <div class="clbl">LEDE&nbsp;·&nbsp;要約</div>
+          <div class="chead">3行サマリ</div>
+          <ul class="sum-list"><li><span class="cn">①</span><span class="cbody">「リリース当初は期待外れ」と評されたM365 Copilotが、GPT-5統合を転換点として実用性が大きく向上。3人のMicrosoft MVPが「脱・プロンプト職人」を活用の本質と指摘し、使い方の根本的な変化を促す</span></li><li><span class="cn">②</span><span class="cbody">「プロンプトを工夫すれば使える」という従来の生成AI活用論が崩れ、「自然な業務指示でAIが意図を理解する」段階に移行しつつあることが実践者視点で確認された</span></li><li><span class="cn">③</span><span class="cbody">Microsoft MVPの座談会形式（実践者の質的評価）、GPT-5統合後の性能向上という実績（記事より）</span></li></ul>
+        </div>
+        <div class="ac-col">
+          <div class="clbl">DEBATE&nbsp;·&nbsp;議論</div>
+          <div class="chead">想定議論ポイント</div>
+          <div class="disc-wrap">
+    <div class="disc-item">
+      <span class="qn">Q1</span>
+      <p>「プロンプト職人スキル」が不要になる時代、AIツール活用教育のカリキュラムはどう変わるか（What to askよりHow to workへ）？</p>
+    </div>
+    <div class="disc-item">
+      <span class="qn">Q2</span>
+      <p>GPT-5統合でCopilotが「ポンコツ」から「使える」に変わったとすれば、当初から投資していた企業と様子見していた企業の間にはどのような差がついたか？</p>
+    </div>
+    <div class="disc-item">
+      <span class="qn">Q3</span>
+      <p>M365 Copilotの「逆転劇」は他のAIツール（Gemini for Workspace・Claude for Business等）でも同様のパターンをたどるか、製品サイクルとして一般化できるか？</p>
+    </div></div>
+        </div>
+        <div class="ac-col">
+          <div class="clbl">OUTLOOK&nbsp;·&nbsp;次章</div>
+          <div class="chead">論理的次章</div>
+          <ul class="next-list"><li>「GPT-5統合後のCopilot、実際に何が変わったか」を定量測定した企業内レポートが出てくる。</li><li>「脱プロンプト職人」時代に向けたCopilot活用研修の内容刷新が各社で始まる。</li><li>GPT-5統合と同様の進化をGemini・Claudeが追い、「どのCopilotが最も業務で使えるか」の第三者比較評価が更新される。</li></ul>
+        </div>
+      </div>
+
+      <div class="ab">
+        <div class="ab-l">
+          <div class="ab-tiny">SECTION&nbsp;·&nbsp;OUR ANGLE</div>
+          <div class="ab-head">自社業務との<br>接点</div>
+        </div>
+        <div class="ab-text">クライアントのCopilot定着化支援において「なぜ今が再挑戦のタイミングか」という再提案根拠になる。先週掲載の「社内利用率95%の5鉄則」と組み合わせ、「どう使うか（定着化）」×「何が変わったか（製品進化）」の両軸で提案ができる。</div>
+      </div>
+
+    </section>
+
+    <section class="art-slide">
+
+      <div class="ah">
+        <div class="ah-l">
+          <span class="ah-badge">BRIEF&nbsp;·&nbsp;15</span>
+          <span class="ah-src">ITmedia エンタープライズ</span>
+          <span class="ah-dot">·</span>
+          <span class="ah-date">2026 / 05 / 18</span>
+          <a href="https://www.itmedia.co.jp/enterprise/articles/2605/18/news062.html" class="ah-link" target="_blank">記事を開く ↗</a>
+        </div>
+        <div class="ah-r">
+          <span class="ah-rlbl">重要度</span>
+          <span class="ah-stars">★★★</span>
+        </div>
+      </div>
+
+      <div class="at">
+        <div class="at-cat">ITMEDIA エンタープライズ&nbsp;·&nbsp;ANALYSIS</div>
+        <h2 class="at-title">NEC社長が説く</h2>
+        <p class="at-sub">AI時代と新たな安全保障環境の到来で「ITサービスはこう変わる」</p>
+        <div class="at-rule"></div>
+      </div>
+
+      <div class="ac">
+        <div class="ac-col">
+          <div class="clbl">LEDE&nbsp;·&nbsp;要約</div>
+          <div class="chead">3行サマリ</div>
+          <ul class="sum-list"><li><span class="cn">①</span><span class="cbody">NECの森田隆之社長がAI時代における「ITサービス産業における勝者の条件」を語った。AI社会実装と安全保障技術実装の2本柱で、従来のシステム構築型から「AIで社会課題を解決する」事業体への転換を宣言</span></li><li><span class="cn">②</span><span class="cbody">先週のNEC新中期経営計画発表（2030年度に営業利益倍増）の続編として、社長が「勝者の条件」を公言したことは、ITサービス業界全体の方向性を示すシグナルとして重要</span></li><li><span class="cn">③</span><span class="cbody">2026年5月12日発表の新中期経営計画で「2030年度にNon-GAAP営業利益を2025年度比で倍増」、AI社会実装と安全保障技術実装の2本柱（NEC発表より）</span></li></ul>
+        </div>
+        <div class="ac-col">
+          <div class="clbl">DEBATE&nbsp;·&nbsp;議論</div>
+          <div class="chead">想定議論ポイント</div>
+          <div class="disc-wrap">
+    <div class="disc-item">
+      <span class="qn">Q1</span>
+      <p>「AI社会実装×安全保障技術」という2本柱で戦略を立てるNECは、従来の業務DX・ERP導入支援市場においてどのポジションを保持・縮小しようとしているか？</p>
+    </div>
+    <div class="disc-item">
+      <span class="qn">Q2</span>
+      <p>ITサービス産業の「勝者の条件」がAI実装力になるとき、中堅・中小のITコンサルや業務改善コンサルはどの条件で「勝者」側に残れるか？</p>
+    </div>
+    <div class="disc-item">
+      <span class="qn">Q3</span>
+      <p>「安全保障環境の到来」というファクターがITサービス産業の競争軸に加わることで、民間企業のDX投資判断はどう変わるか？</p>
+    </div></div>
+        </div>
+        <div class="ac-col">
+          <div class="clbl">OUTLOOK&nbsp;·&nbsp;次章</div>
+          <div class="chead">論理的次章</div>
+          <ul class="next-list"><li>NECが「AIで社会課題を解決した」具体的な成約案件・ROI報告が出てくる。</li><li>「NEC BluStellar」ブランドの業務AI製品群の詳細発表が続く。</li><li>NECが縮小する「従来型システム構築」市場に他のITベンダーが参入する動きが出てくる。</li></ul>
+        </div>
+      </div>
+
+      <div class="ab">
+        <div class="ab-l">
+          <div class="ab-tiny">SECTION&nbsp;·&nbsp;OUR ANGLE</div>
+          <div class="ab-head">自社業務との<br>接点</div>
+        </div>
+        <div class="ab-text">SIer大手がAI実装に軸足を移す中、業務改善コンサルとしての「プロセス設計×業界知識×チェンジマネジメント」の独自バリューを改めて整理する必要がある。NECが退く業務DX領域に入る機会でもある。</div>
+      </div>
+
+    </section>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+Reveal.initialize({
+  width:  1280,
+  height: 720,
+  margin: 0.03,
+  minScale: 0.2,
+  maxScale: 2.5,
+  controls: true,
+  controlsTutorial: false,
+  progress: true,
+  slideNumber: 'c/t',
+  hash: true,
+  center: false,
+  transition: 'fade',
+  transitionSpeed: 'fast',
+  keyboard: { 27: null }
+});
+</script>
+</body>
+</html>
